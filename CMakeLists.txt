@@ -9,7 +9,6 @@ set ( SRC_PATH ${ISSUE_ROOT}/src )
 
 # Define Sources
 set(SRC_FILES
-        ${SRC_PATH}/main.cpp
 
         # Models
         ${SRC_PATH}/model/model.h
@@ -17,6 +16,10 @@ set(SRC_FILES
         ${SRC_PATH}/model/document.h
 )
 
+
+set(MAIN_SRC_FILES
+        ${SRC_PATH}/main.cpp
+        )
 
 # Define Include Directory
 include_directories ( .
@@ -28,4 +31,4 @@ include_directories ( .
 add_subdirectory( test )
 
 # Make Executable
-add_executable(issue_me ${SRC_FILES})
+add_executable(issue_me ${SRC_FILES} ${MAIN_SRC_FILES})

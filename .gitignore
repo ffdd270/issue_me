@@ -1,2 +1,8 @@
-﻿.idea
+﻿# Temp Folders
+.idea
+.vs
+
+# Build Results
 cmake-build-debug
+out
+msvc
