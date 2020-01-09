@@ -14,7 +14,7 @@ namespace IssueMe
     class Model
     {
     public:
-        virtual void AddNotice( std::function<void( std::string )> t_callback ) = 0;
+        virtual void AddNotice( std::function<void( std::string, const std::string & )> t_callback ) = 0;
     };
 
 }

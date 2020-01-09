@@ -33,7 +33,6 @@ namespace IssueMe
 
         }
 
-
         Page(PageId t_page_id , std::string t_user_id, std::string t_name, std::string t_text) :
             page_id( t_page_id ), user_id(std::move( t_user_id )), name(std::move( t_name )), text(std::move( t_text ))
         {
@@ -57,8 +56,10 @@ namespace IssueMe
 
     class Document : public Model
     {
+    public: //con;
+        Document();
     public: //Model Interface
-        void AddNotice( std::function<void( std::string )> t_callback ) override;
+        void AddNotice( std::function<void( std::string, const std::string &)> t_callback ) override;
     public:
         PageId Submit(const std::string & user_id, std::string name, std::string text );
 
@@ -67,7 +68,7 @@ namespace IssueMe
     private:
         void submitToCache( PageId id, const std::string & user_id );
     private:
-        std::function< void(std::string) > m_callback;
+        std::function< void(std::string, const std::string &) > m_callback;
 
         std::vector<Page> m_pages;
         std::unordered_map<std::string, Pages> m_cache_by_user_pages;

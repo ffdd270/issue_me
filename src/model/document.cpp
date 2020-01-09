@@ -4,6 +4,7 @@
 
 #include "document.h"
 #include <cassert>
+#include <iostream>
 
 using namespace IssueMe;
 
@@ -28,7 +29,16 @@ void Pages::addPageIndex(PageId id)
 
 //=======================Document / Public .
 
-void Document::AddNotice(std::function<void(std::string)> t_callback )
+Document::Document()
+{
+    m_callback = []( std::string, std::string )
+    {
+        std::cout << " CALLBACK WAS DEAD! " << std::endl;
+    };
+}
+
+
+void Document::AddNotice(std::function<void(std::string, const std::string &)> t_callback )
 {
     m_callback = t_callback;
 }
@@ -40,6 +50,8 @@ PageId Document::Submit(const std::string & user_id, std::string name, std::stri
 
     m_pages.push_back( std::move( page ) );
     submitToCache( new_id, user_id );
+
+    m_callback( "Submit", m_pages.back().text );
 
     return new_id;
 }
@@ -58,7 +70,7 @@ const Pages & Document::GetByUserId(const std::string& user_id) const
 
 const Page & Document::GetByPageId(PageId id) const
 {
-    assert( id >= m_pages.size() );
+    assert( id < m_pages.size() );
 
     return m_pages[id];
 }
@@ -78,4 +90,5 @@ void Document::submitToCache(PageId id, const std::string & user_id)
     auto & pages = m_cache_by_user_pages[user_id];
     pages.addPageIndex(id);
 }
+
 

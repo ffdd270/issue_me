@@ -1,4 +1,2 @@
-//
-// Created by HaruGakkaP on 2020-01-09.
-//
-
+#define CATCH_CONFIG_MAIN
+#include <test/catch.h>
