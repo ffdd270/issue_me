@@ -31,7 +31,7 @@ TEST_CASE( "Test Document", "[classic]" )
         REQUIRE( text == "Yah! We On Ruby!" );
     }
 
-	SECTION( "Submit And Get Page")
+	SECTION( "Submit And Get Page By PageId")
     {
 	    IssueMe::PageId page_id = document.Submit(user_id, "RUBY RUBY", "Yah! We On Ruby!");
     	
@@ -41,5 +41,30 @@ TEST_CASE( "Test Document", "[classic]" )
 		REQUIRE(user_id == page.user_id);
 		REQUIRE(page_id == page.page_id);
 		REQUIRE("RUBY RUBY" == page.name);
+    }
+
+    SECTION("Clear Document")
+    {
+        document.Clear();
+        REQUIRE( document.GetPagesCount() == 0 );
+    }
+
+    SECTION("Submit And Get Page By UserId")
+    {
+        document.Submit(user_id, "Test 1", "Test 1 Text" );
+        document.Submit(user_id, "Test 2", "Test 2 Text" );
+
+        auto page_index = document.GetByUserId( user_id );
+
+        int find_count = 0;
+
+        for( auto & index : page_index.GetPageIndices() )
+        {
+            auto page = document.GetByPageId( index );
+            std::cout << page << std::endl;
+            find_count++;
+        }
+
+        REQUIRE( find_count == 2 );
     }
 }

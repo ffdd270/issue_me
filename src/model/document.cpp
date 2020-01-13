@@ -8,6 +8,16 @@
 
 using namespace IssueMe;
 
+//
+std::ostream & IssueMe::operator<<( std::ostream & stream, Page & page )
+{
+    stream << "User Id : " << page.user_id << std::endl;
+    stream << "Page Id : " << page.page_id << std::endl;
+    stream << "Name : " << page.name << std::endl;
+    stream << "Text : " << page.text << std::endl;
+
+    return stream;
+}
 
 
 //=======================Pages / Public .
@@ -31,7 +41,7 @@ void Pages::addPageIndex(PageId id)
 
 Document::Document()
 {
-    m_callback = []( std::string, std::string )
+    m_callback = []( std::string, const std::string & )
     {
         std::cout << " CALLBACK WAS DEAD! " << std::endl;
     };
@@ -89,6 +99,17 @@ void Document::submitToCache(PageId id, const std::string & user_id)
 
     auto & pages = m_cache_by_user_pages[user_id];
     pages.addPageIndex(id);
+}
+
+size_t Document::GetPagesCount() const
+{
+    return m_pages.size();
+}
+
+void Document::Clear()
+{
+    m_pages.clear();
+    m_cache_by_user_pages.clear();
 }
 
 

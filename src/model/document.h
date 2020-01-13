@@ -40,6 +40,8 @@ namespace IssueMe
         }
     };
 
+    std::ostream & operator<<( std::ostream & stream, Page & page );
+
     class Pages
     {
     public:
@@ -61,10 +63,14 @@ namespace IssueMe
     public: //Model Interface
         void AddNotice( std::function<void( std::string, const std::string &)> t_callback ) override;
     public:
-        PageId Submit(const std::string & user_id, std::string name, std::string text );
+        PageId Submit(const std::string & user_id, std::string name, std::string text);
 
         const Pages & GetByUserId( const std::string& user_id ) const;
         const Page & GetByPageId( PageId id ) const;
+
+        size_t GetPagesCount() const;
+
+        void Clear();
     private:
         void submitToCache( PageId id, const std::string & user_id );
     private:
