@@ -6,3 +6,4 @@
 cmake-build-debug
 out
 msvc
+linux_build
